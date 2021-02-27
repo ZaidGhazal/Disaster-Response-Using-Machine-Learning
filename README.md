@@ -26,7 +26,7 @@ In a Python script, `process_data.py`, we have done a data cleaning pipeline tha
 - Stores it in a SQLite database
 
 ## Modeling
-In this step, we created a Machine Learning model to predict each message's category. In a Python script, train_classifier.py,we have done a Machine Learning Pipeline that:
+In this step, we created a Machine Learning model to predict each message's category. In a Python script, `train_classifier.py`, we have done a Machine Learning Pipeline that:
 
 - Loads data from the SQLite database
 - Splits the dataset into training and test sets
@@ -36,7 +36,7 @@ In this step, we created a Machine Learning model to predict each message's cate
 - Exports the final model as a pickle file
 
 ## Web App
-The project set the Machine Learning model in interactive environment so it can be used easly to predict the message related category. The Python script `run.py` contains the backend code, as well as in the template file you can find the html files.
+The project set the Machine Learning model in interactive environment so it can be used easly to predict the message related category. The Python script `run.py` contains the backend code, as well as in the template file you can find the html files. To run the web app, you need first to apply the ETL process on the messages and categories CSV files and get the SQL database. You can achieve that by running the `process_data.py` script with the required arguments. Next, you can build the ML model by only running the script `train_classifier.py` with the required arguments. After the model is ready (as .pkl file), you can run the web app on your localhost using the `run.py` script. Please note that running the app on the localhost method differs based on the operating system you use (Windows, MacOS, Linux).
 
 ![alt text](https://github.com/ZaidGhazal/Disaster-Response-Using-Machine-Learning/blob/main/WebApp.png?raw=true)
      
