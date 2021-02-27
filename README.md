@@ -25,6 +25,12 @@ In a Python script, `process_data.py`, we have done a data cleaning pipeline tha
 - Cleans the data
 - Stores it in an SQLite database
 
+**Note:** To run the script, you should use the command in this format: 
+
+`python process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db`
+
+Where the first argument is the messages dataset file path, second is  the categories dataset file path, and the last one is SQL database saving path.
+
 ## Modeling
 In this step, we created a Machine Learning model to predict each message's category. In a Python script, `train_classifier.py`, we have done a Machine Learning Pipeline that:
 
@@ -35,8 +41,24 @@ In this step, we created a Machine Learning model to predict each message's cate
 - Outputs results on the test set
 - Exports the final model as a pickle file
 
+**Note:** To run the script, you should use the command in this format:
+
+`python train_classifier.py  ../data/DisasterResponse.db  classifier.pkl`
+
+Where the first argument is the SQL database (created using the ETL) file path, second is the model file saving path.
+
 ## Web App
 The project set the Machine Learning model in an interactive environment so it can be used easily to predict the message-related category. The Python script `run.py` contains the backend code, as well as in the template file you can find the HTML files. To run the web app, you need first to apply the ETL process on the messages and categories CSV files and get the SQL database. You can achieve that by running the `process_data.py` script with the required arguments. Next, you can build the ML model by only running the script `train_classifier.py` with the required arguments. After the model is ready (as a .pkl file), you can run the web app on your localhost using the `run.py` script. Please note that running the app on the localhost method differs based on the operating system you use (Windows, macOS, Linux).
+
+The used commands to run the web app on Linux terminal:
+
+`env|grep WORK` : Get the SPACEDOMAIN and SPACEID 
+
+`python run.py` : Runs the server
+
+`https://SPACEID-3001.SPACEDOMAIN` : URL used to access the web app from the browser (SPACEDOMAIN & SPACEID are given by the command env|grep WORK)
+
+
 
 ![alt text](https://github.com/ZaidGhazal/Disaster-Response-Using-Machine-Learning/blob/main/WebApp.png?raw=true)
      
