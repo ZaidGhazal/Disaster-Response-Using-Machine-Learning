@@ -6,7 +6,7 @@ import sqlite3
 import numpy as np
 from sqlalchemy import create_engine
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import f1_score
+from sklearn.metrics import f1_score, make_scorer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.neighbors import KNeighborsClassifier
@@ -84,17 +84,17 @@ def build_model():
     pipeline = Pipeline([
     ('vect', CountVectorizer(tokenizer=tokenize)),
     ('tfidf', TfidfTransformer()),
-    ('clf', ExtraTreesClassifier())
+    ('clf', ExtraTreesClassifier(n_jobs=-1))
     ])
 
    # Define the parameters for the GridsearchCV 
     parameters = {
-    'clf__class_weight': [None,'balanced'],
-    'clf__n_estimators': [10,50]
+    'clf__n_estimators': [10,20,50,100]
     }
 
     # Define the GridSearchCV and its arguments
-    cv = GridSearchCV(pipeline,param_grid=parameters, scoring=f1_score, verbose=1, cv=2)
+    scorer = make_scorer(score_func= f1_score, average='weighted', zero_division=1)
+    cv = GridSearchCV(pipeline,param_grid=parameters, scoring=scorer, verbose=1, cv=2)
     
     return cv
 
@@ -121,7 +121,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     for i,column in enumerate(category_names):
         target_name = [column]
         print('REPORT for Column: ' + column)
-        print(classification_report(Y_test[:,i], y_pred[:,i]))
+        print(classification_report(Y_test[:,i], y_pred[:,i], zero_division=1))
 
 
 def save_model(model, model_filepath):
