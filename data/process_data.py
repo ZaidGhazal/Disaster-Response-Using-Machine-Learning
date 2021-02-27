@@ -49,6 +49,8 @@ def clean_data(df):
     df = df.drop(columns='categories')
     df = pd.concat([df,categories], axis=1)
     df = df.drop_duplicates()
+    df = df.dropna(how='all')
+    df = df[df.related != 2]
     return df
 
 def save_data(df, database_filename):
@@ -62,7 +64,7 @@ def save_data(df, database_filename):
     
     # Save the cleaned dataset as SQL (.db) database 
     engine = create_engine('sqlite:///' + database_filename)
-    df.to_sql('data_table', engine, index=False)  
+    df.to_sql('data_table', engine, index=False, if_exists='replace')  
 
 
 def main():
